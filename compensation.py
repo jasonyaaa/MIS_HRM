@@ -149,18 +149,6 @@ def batch_delete():
         save_json(DATA_FILE, st.session_state.comp)
         st.success("批次刪除完成！")
 
-def import_data():
-    st.subheader("📂 導入薪酬資料 (JSON)")
-    up = st.file_uploader("上傳 JSON", type=["json"])
-    if up:
-        data = json.load(up)
-        if isinstance(data, list):
-            st.session_state.comp.extend(data)
-            save_json(DATA_FILE, st.session_state.comp)
-            log_action("導入資料", f"{len(data)} 條記錄")
-            st.success("資料導入成功！")
-        else:
-            st.error("格式錯誤！")
 
 def analytics():
     st.subheader("📊 薪酬福利分析")
@@ -211,7 +199,7 @@ def cb_module():
     st.sidebar.title("功能選單")
     choice = st.sidebar.radio("請選擇操作", [
         "查看薪酬記錄", "新增薪酬記錄", "修改薪酬記錄", "刪除薪酬記錄",
-        "批量刪除", "導入資料", "薪酬分析", "查看日誌"
+        "批量刪除", "薪酬分析", "查看日誌"
     ])
 
     if choice == "查看薪酬記錄": view_compensation()
@@ -219,7 +207,7 @@ def cb_module():
     elif choice == "修改薪酬記錄": edit_compensation()
     elif choice == "刪除薪酬記錄": delete_compensation()
     elif choice == "批量刪除": batch_delete()
-    elif choice == "導入資料": import_data()
+
     elif choice == "薪酬分析": analytics()
     elif choice == "查看日誌": view_logs()
 

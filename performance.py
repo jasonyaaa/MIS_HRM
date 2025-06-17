@@ -146,18 +146,6 @@ def batch_delete():
         save_json(DATA_FILE, st.session_state.performance)
         st.success("批量刪除完成！")
 
-def import_data():
-    st.subheader("📂 導入績效資料 (JSON)")
-    up = st.file_uploader("上傳 JSON", type=["json"])
-    if up:
-        data = json.load(up)
-        if isinstance(data, list):
-            st.session_state.performance.extend(data)
-            save_json(DATA_FILE, st.session_state.performance)
-            log_action("導入資料", f"{len(data)} 條")
-            st.success("導入成功！")
-        else:
-            st.error("格式錯誤！")
 
 def analytics():
     st.subheader("📊 績效分析儀表板")
@@ -203,7 +191,7 @@ def kpi_module():
     st.sidebar.title("功能選單")
     choice = st.sidebar.radio("請選擇操作", [
         "查看績效評估", "新增績效評估", "修改績效評估", "刪除績效評估",
-        "批量刪除", "導入資料", "績效分析", "查看日誌"
+        "批量刪除", "績效分析", "查看日誌"
     ])
 
     if choice == "查看績效評估": view_performance()
@@ -211,7 +199,7 @@ def kpi_module():
     elif choice == "修改績效評估": edit_performance()
     elif choice == "刪除績效評估": delete_performance()
     elif choice == "批量刪除": batch_delete()
-    elif choice == "導入資料": import_data()
+
     elif choice == "績效分析": analytics()
     elif choice == "查看日誌": view_logs()
 

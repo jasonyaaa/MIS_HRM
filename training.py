@@ -139,18 +139,6 @@ def batch_delete():
         save_json(DATA_FILE, st.session_state.trainings)
         st.success("批次刪除完成！")
 
-def import_data():
-    st.subheader("📂 導入課程資料(JSON)")
-    up = st.file_uploader("上傳 JSON", type=["json"])
-    if up:
-        data = json.load(up)
-        if isinstance(data, list):
-            st.session_state.trainings.extend(data)
-            save_json(DATA_FILE, st.session_state.trainings)
-            log_action("導入資料", f"{len(data)} 條")
-            st.success("導入成功！")
-        else:
-            st.error("格式錯誤！")
 
 def view_logs():
     st.subheader("📜 操作日誌")
@@ -251,7 +239,7 @@ def td_module():
     st.sidebar.title("功能選單")
     choice = st.sidebar.radio("請選擇操作", [
         "查看課程", "新增課程", "修改課程", "刪除課程",
-        "批量刪除", "導入資料", "日誌紀錄",
+        "批量刪除", "日誌紀錄",
         "安排場次", "標記出席", "生成證書", "課程分析"
     ])
 
@@ -260,7 +248,7 @@ def td_module():
     elif choice == "修改課程": edit_training()
     elif choice == "刪除課程": delete_training()
     elif choice == "批量刪除": batch_delete()
-    elif choice == "導入資料": import_data()
+
     elif choice == "日誌紀錄": view_logs()
     elif choice == "安排場次": schedule_session()
     elif choice == "標記出席": mark_attendance()

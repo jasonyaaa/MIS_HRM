@@ -133,18 +133,6 @@ def batch_delete_er():
         save_json(DATA_FILE, st.session_state.er)
         st.success("批次刪除完成！")
 
-def import_er():
-    st.subheader("📂 導入意見資料 (JSON)")
-    up = st.file_uploader("上傳 JSON", type=["json"])
-    if up:
-        data = json.load(up)
-        if isinstance(data, list):
-            st.session_state.er.extend(data)
-            save_json(DATA_FILE, st.session_state.er)
-            log_action("導入資料", f"{len(data)} 條")
-            st.success("導入成功！")
-        else:
-            st.error("格式錯誤！")
 
 
 def analytics_er():
@@ -190,7 +178,7 @@ def er_module():
     st.sidebar.title("功能選單")
     choice = st.sidebar.radio("請選擇操作", [
         "查看申訴/意見", "提交申訴/意見", "修改申訴/意見", "刪除申訴/意見",
-        "批量刪除", "導入資料", "意見分析", "查看日誌"
+        "批量刪除", "意見分析", "查看日誌"
     ])
 
     if choice == "查看申訴/意見": view_er()
@@ -198,7 +186,7 @@ def er_module():
     elif choice == "修改申訴/意見": edit_er()
     elif choice == "刪除申訴/意見": delete_er()
     elif choice == "批量刪除": batch_delete_er()
-    elif choice == "導入資料": import_er()
+
     elif choice == "意見分析": analytics_er()
     elif choice == "查看日誌": view_logs_er()
 

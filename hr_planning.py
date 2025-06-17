@@ -168,18 +168,6 @@ def batch_delete():
         save_json(CALENDAR_FILE, st.session_state.hrp_calendar)
         st.success("批量刪除完成。")
 
-def import_data():
-    st.header("📂 導入資料")
-    uploaded = st.file_uploader("上傳 JSON", type=["json"])
-    if uploaded:
-        data = json.load(uploaded)
-        if isinstance(data, list):
-            st.session_state.hrp_data.extend(data)
-            save_json(DATA_FILE, st.session_state.hrp_data)
-            log_action("導入資料", f"{len(data)} 條")
-            st.success("導入完成。")
-        else:
-            st.error("格式錯誤。")
 
 def view_logs():
     st.header("📜 操作日誌")
@@ -250,7 +238,7 @@ def hrp_module():
     st.sidebar.title("功能選單")
     menu = [
         "查看需求", "新增需求", "修改需求", "刪除需求",
-        "批量刪除", "導入資料", "查看日誌",
+        "批量刪除", "查看日誌",
         "日曆提醒", "數據分析"
     ]
     choice = st.sidebar.radio("請選擇操作", menu)
@@ -260,7 +248,7 @@ def hrp_module():
     elif choice == "修改需求": edit_entry()
     elif choice == "刪除需求": delete_entry()
     elif choice == "批量刪除": batch_delete()
-    elif choice == "導入資料": import_data()
+
     elif choice == "查看日誌": view_logs()
     elif choice == "日曆提醒": view_calendar()
     elif choice == "數據分析": data_analysis()
